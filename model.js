@@ -29,6 +29,11 @@ export function getNextBall(ball) {
   return ball.next;
 }
 
+export function getPreviousBall(ball) {
+  if (!ball) return null;
+  return ball.prev;
+}
+
 export function addRandomBall() {
   return list.add(randomBall());
 }
@@ -75,7 +80,7 @@ export function getCannonBall() {
 // **** MATCHES ****
 
 export function findMatches(node) {
-  return [node, ...findMatchesLeft(node), ...findMatchesRight(node)];
+  return [node, ...findMatchesRight(node), ...findMatchesLeft(node)];
 }
 
 export function findMatchesRight(node) {

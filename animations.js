@@ -10,7 +10,6 @@ import * as controller from "./controller.js";
 export function animateNewBall(model, newBall) {
   // update entire model
   view.updateDisplay(model);
-
   // Find the visualBall for this newBall
   const visualBall = view.getVisualBall(newBall);
 
@@ -56,7 +55,6 @@ export function animateExpandSpaceForBall(visualBall) {
 export function animateCannonBall(model, newBall) {
   // Start by updating the entire model
   view.updateDisplay(model);
-
   // Find the visualBall for this newBall
   const visualBall = view.getVisualBall(newBall);
 
