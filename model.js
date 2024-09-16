@@ -1,6 +1,7 @@
 import SimpleLinkedList from "./simplelinkedlist.js";
 
 export { init };
+export { init };
 
 const list = new SimpleLinkedList();
 
@@ -13,7 +14,10 @@ function dump() {
   let output = "";
   while (node != null) {
     output += '"' + node.data + node.id + '"';
+  while (node != null) {
+    output += '"' + node.data + node.id + '"';
     output += " -> ";
+
 
     node = node.next;
   }
@@ -98,8 +102,10 @@ function removeMatches(matches) {
 // **** BALLS ****
 
 const balls = ["🔴", "🔵", "🟡", "🟢"];
+const balls = ["🔴", "🔵", "🟡", "🟢"];
 
 function randomBall() {
+  return balls[Math.floor(Math.random() * balls.length)];
   return balls[Math.floor(Math.random() * balls.length)];
 }
 
@@ -120,3 +126,4 @@ function green() {
 }
 
 debugger;
+
