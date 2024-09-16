@@ -1,21 +1,20 @@
 import SimpleLinkedList from "./simplelinkedlist.js";
 
-export {init}
+export { init };
 
 const list = new SimpleLinkedList();
 
 function init() {
   console.log("Model init");
-
 }
 
 function dump() {
   let node = list.head;
   let output = "";
-  while(node != null) {
-    output += '"' + node.data + node.id +'"';
+  while (node != null) {
+    output += '"' + node.data + node.id + '"';
     output += " -> ";
-   
+
     node = node.next;
   }
   output += "null";
@@ -24,17 +23,21 @@ function dump() {
 
 // **** WRAPPERS ****
 function addRandomBall() {
-  // TODO: Implement
+  list.add(randomBall());
 }
 
 function addBall(ball) {
-  // TODO: Implement
+  list.add(ball);
 }
 
 // TODO: Implement more functions
 
 function numberOfBalls() {
-  // TODO: Implement
+  return list.size();
+}
+
+function insertBallAfter(node, ball) {
+  list.insertAfter(ball, node);
 }
 
 // **** CANNON ****
@@ -52,13 +55,12 @@ function getCannonBall() {
 
 // TODO: Implement functions to find and remove matches
 
-
 // **** BALLS ****
 
-const balls = ["🔴", "🔵","🟡","🟢"];
+const balls = ["🔴", "🔵", "🟡", "🟢"];
 
 function randomBall() {
-  return balls[Math.floor(Math.random()*balls.length)];
+  return balls[Math.floor(Math.random() * balls.length)];
 }
 
 function red() {
