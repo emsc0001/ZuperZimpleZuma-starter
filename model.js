@@ -25,16 +25,23 @@ function dump() {
 // **** WRAPPERS ****
 function addRandomBall() {
   // TODO: Implement
+  list.add(randomBall());
 }
 
 function addBall(ball) {
   // TODO: Implement
+  list.add((ball))
 }
 
 // TODO: Implement more functions
 
 function numberOfBalls() {
   // TODO: Implement
+  return list.size();
+}
+
+function insertBallAfter(node, ball) {
+  list.insertAfter(ball, node);
 }
 
 // **** CANNON ****
