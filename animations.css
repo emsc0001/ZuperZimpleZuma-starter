@@ -15,7 +15,7 @@
 
 .animate-expand {
   animation-name: expand;
-  animation-duration: .2s;
+  animation-duration: 0.2s;
   animation-timing-function: ease-in;
   animation-delay: 0.8s;
   animation-iteration-count: 1;
@@ -45,12 +45,12 @@
     transform: translate(var(--delta-x), var(--delta-y));
   }
   to {
-    transform: translate(0,0);
+    transform: translate(0, 0);
   }
 }
 
 .animate-implode {
-  animation: implode .7s ease-in 1 forwards;
+  animation: implode 1s ease-in 1 forwards;
 }
 
 .animate-implode button {

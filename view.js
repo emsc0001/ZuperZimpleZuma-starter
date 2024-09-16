@@ -1,5 +1,7 @@
 // TODO: Import controller
-export {init, updateDisplay}
+import * as controller from "./controller.js";
+import * as animations from "./animations.js";
+export { init, updateDisplay };
 
 // *********************************
 // *                               *
@@ -13,17 +15,20 @@ function init() {
 }
 
 function addNewBall() {
-  console.log("View clicked add new ball"); 
   // notify controller
-  console.log("TODO: Notify controller that we want to add a new ball to the chain!")
-  // TODO: Notify controller that we want to add a new ball to the chain!
+  controller.addRandomBall();
 }
 
 const visualBalls = {
   "🔴": "red-ball.png",
   "🔵": "blue-ball.png",
   "🟡": "yellow-ball.png",
-  "🟢": "green-ball.png"
+  "🟢": "green-ball.png",
+};
+
+const modelToView = new Map();
+export function getVisualBall(ball) {
+  return modelToView.get(ball);
 }
 
 function updateDisplay(model) {
@@ -35,20 +40,18 @@ function updateDisplay(model) {
 
   // iterate through model of balls with the usual linked list method:
   // - find the first, loop while it isn't null, inside the loop: find the next
-
-  // TODO: Find the first ball
-  // TODO: loop while the ball isn't null
-  while( ) {
+  let ball = model.getFirstBall();
+  while (!!ball) {
     // add visual ball
     const visualBall = createVisualBall(ball.data);
     visualChain.append(visualBall);
     // add button next to ball
     addButtonTo(visualBall, ball);
 
-    // TODO: find the next ball and loop the loop
+    modelToView.set(ball, visualBall);
 
+    ball = model.getNextBall(ball);
   }
-
   // Also update the cannonball
   updateCannonBall(model.getCannonBall());
 }
@@ -64,7 +67,7 @@ function createVisualBall(color) {
   const visualBall = document.createElement("div");
   visualBall.classList.add("ball");
   const image = document.createElement("img");
-  image.src = "images/"+visualBalls[color];
+  image.src = "images/" + visualBalls[color];
   visualBall.append(image);
   return visualBall;
 }
@@ -74,12 +77,8 @@ function addButtonTo(visualBall, ballModel) {
   visualBall.append(button);
   // handle click
   button.addEventListener("click", () => {
-    console.log(`Clicked button after ${ballModel.data}`);
-    console.log(ballModel);
     // notify controller
-    console.log("TODO: Notify controller that we want to insert the cannonball after this!")
-    // TODO: Notify controller that we want to insert the cannonball after this!
-
+    controller.insertBallAfter(ballModel);
   });
 }
 

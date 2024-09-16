@@ -1,8 +1,5 @@
 import * as view from "./view.js";
-import * as controller from "./controller.js"
-
-// TODO: Export animation functions
-// ALSO: Remember to import the same functions in view
+import * as controller from "./controller.js";
 
 // *********************************
 // *                               *
@@ -10,22 +7,27 @@ import * as controller from "./controller.js"
 // *                               *
 // *********************************
 
-function animateNewBall(model, newBall) {
+export function animateNewBall(model, newBall) {
   // update entire model
-  view.updateDisplay(model)
+  view.updateDisplay(model);
 
   // Find the visualBall for this newBall
-  const visualBall; // TODO: get the visual Ball from the view
+  const visualBall = view.getVisualBall(newBall);
 
   // We only want to animate the image - not the entire div with the button
   const onlyImg = visualBall.firstElementChild;
 
   // First: - position to start from - somewhere just outside the screen
-    
+  const rightEdgeX = window.innerWidth;
+  const startX = rightEdgeX + 100;
+
   // Last: - position to end - the current position of the visualBall
-  
+  const endX = visualBall.offsetLeft;
+
   // Invert - calculate difference
-  
+  const deltaX = startX - endX;
+  onlyImg.style.setProperty("--delta-x", deltaX + "px");
+
   // Play animation
   onlyImg.classList.add("animate-add");
   onlyImg.addEventListener("animationend", doneAnimateNewBall);
@@ -36,9 +38,9 @@ function animateNewBall(model, newBall) {
 }
 
 /**
- * Use simple animation to expand the space already occupied by a visualball 
+ * Use simple animation to expand the space already occupied by a visualball
  */
-function animateExpandSpaceForBall( visualBall ) {
+export function animateExpandSpaceForBall(visualBall) {
   visualBall.classList.add("animate-expand");
   visualBall.addEventListener("animationend", doneExpanding);
 
@@ -51,12 +53,12 @@ function animateExpandSpaceForBall( visualBall ) {
 /**
  * Use FLIP animation to animate a ball from the position of the canonball
  */
-function animateCannonBall(model, newBall) {
+export function animateCannonBall(model, newBall) {
   // Start by updating the entire model
   view.updateDisplay(model);
 
   // Find the visualBall for this newBall
-  const visualBall; // TODO: get the visual Ball from the view
+  const visualBall = view.getVisualBall(newBall);
 
   // Animate the space for the new ball
   animateExpandSpaceForBall(visualBall);
@@ -66,17 +68,13 @@ function animateCannonBall(model, newBall) {
 
   // First: Find the starting position of the ball - which is where the cannonball is
   const visualCannonball = document.querySelector("#cannon .ball img");
-  
-  // TODO: Find the position (x and y) of the visualCannonBall
-  
+
   // Last: Find the destination position of the ball - which is where it has been added
   const ballImage = visualBall.querySelector("img"); // only use the img, not the entire element with the button
-  
-  // TODO: Find the position (x and y) of the ballImage
 
   // Invert: calculate the distance to move from source to destination
-  const deltaX; 
-  const deltaY;
+  const deltaX = visualCannonball.offsetLeft - ballImage.offsetLeft;
+  const deltaY = visualCannonball.offsetTop - ballImage.offsetTop;
 
   // Play: run the animation from source to destination
   ballImage.style.setProperty("--delta-x", deltaX + "px");
@@ -96,32 +94,29 @@ function animateCannonBall(model, newBall) {
 
     // Show the cannonball again, after animating
     document.querySelector("#cannon .ball img").classList.remove("hide");
-    // TODO: Notify controller when ball has moved
-    console.log("Done moving canonball");
+    controller.removeMatches(newBall);
   }
 }
 
-function animateRemoveBalls(model, balls) {
+export function animateRemoveBalls(model, balls) {
   // NOTE: Run the animation-implode animations BEFORE updating the view
-  
-
-  
   let first = true;
-  const lastBall = balls[balls.length-1];
+  const lastBall = balls[balls.length - 1];
   const nextBall = model.getNextBall(lastBall);
-  for(const ball of balls) {
-    const visualBall = view.getViewForModel(ball);
-    visualBall.classList.add("implode");  
-    if(first) {
+
+  for (const ball of balls) {
+    const visualBall = view.getVisualBall(ball);
+    visualBall.classList.add("animate-implode");
+    if (first) {
       first = false;
-      visualBall.addEventListener("animationend", () => {
-        view.updateDisplay(model);    
-        controller.matchesRemoved(nextBall);
-      });
-    }  
+      visualBall.addEventListener("animationend", doneImploding);
+
+      function doneImploding() {
+        visualBall.removeEventListener("animationend", doneImploding);
+        controller.removeBalls(balls, () => {
+          controller.removeMatches(nextBall);
+        });
+      }
+    }
   }
 }
-
-
-
- 

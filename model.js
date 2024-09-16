@@ -1,14 +1,12 @@
 import SimpleLinkedList from "./simplelinkedlist.js";
 
-export { init };
-
 const list = new SimpleLinkedList();
 
-function init() {
+export function init() {
   console.log("Model init");
 }
 
-function dump() {
+export function dump() {
   let node = list.head;
   let output = "";
   while (node != null) {
@@ -25,78 +23,93 @@ function dump() {
 }
 
 // **** WRAPPERS ****
-function addRandomBall() {
+export function getFirstBall() {
+  return list.head;
+}
+
+export function getNextBall(ball) {
+  if (!ball) return null;
+  return ball.next;
+}
+
+export function addRandomBall() {
   return list.add(randomBall());
 }
 
-function addBall(ball) {
+export function addBall(ball) {
   return list.add(ball);
 }
 
-function insertBallAfter(newBall, node) {
-  const insertedNode = list.insertAfter(newBall, node);
-  const matches = findMatches(insertedNode);
-  removeMatches(matches);
+export function insertBallAfter(newBall, node) {
+  return list.insertAfter(newBall, node);
 }
 
-function insertBallBefore(newBall, node) {
-  const insertedNode = list.insertBefore(newBall, node);
-  const matches = findMatches(insertedNode);
-  removeMatches(matches);
+export function insertBallBefore(newBall, node) {
+  return list.insertBefore(newBall, node);
 }
 
-function numberOfBalls() {
+export function numberOfBalls() {
   return list.size();
 }
 
-function removeBall(node) {
+export function removeBall(node) {
   list.remove(node);
+}
+
+export function clearBalls() {
+  let node = list.head;
+  while (!!node) {
+    list.remove(node);
+    node = node.next;
+  }
 }
 
 // **** CANNON ****
 let cannonBall;
 
-function loadCannon() {
+export function loadCannon() {
   cannonBall = randomBall();
 }
 
-function getCannonBall() {
+export function getCannonBall() {
   return cannonBall;
 }
 
 // **** MATCHES ****
 
-function findMatches(node) {
+export function findMatches(node) {
   return [node, ...findMatchesLeft(node), ...findMatchesRight(node)];
 }
 
-function findMatchesLeft(node) {
+export function findMatchesRight(node) {
+  if (!node) return [];
   const matches = [];
-  let nodeL = node.prev;
-  while (!!nodeL) {
-    if (nodeL.data != node.data) {
-      break;
-    }
-    matches.push(nodeL);
-    nodeL = nodeL.prev;
-  }
-  return matches;
-}
-
-function findMatchesRight(node) {
-  const matches = [];
-  let nodeR = node.next;
+  let nodeR = node.prev;
   while (!!nodeR) {
     if (nodeR.data != node.data) {
       break;
     }
     matches.push(nodeR);
-    nodeR = nodeR.next;
+    nodeR = nodeR.prev;
   }
   return matches;
 }
 
-function removeMatches(matches) {
+export function findMatchesLeft(node) {
+  if (!node) return [];
+  const matches = [];
+  let nodeL = node.next;
+  while (!!nodeL) {
+    if (nodeL.data != node.data) {
+      break;
+    }
+    matches.push(nodeL);
+    nodeL = nodeL.next;
+  }
+  return matches;
+}
+
+export function removeMatches(matches) {
   if (matches.length < 3) return;
   matches.forEach((n) => removeBall(n));
 }
@@ -105,24 +118,24 @@ function removeMatches(matches) {
 
 const balls = ["🔴", "🔵", "🟡", "🟢"];
 
-function randomBall() {
+export function randomBall() {
   return balls[Math.floor(Math.random() * balls.length)];
 }
 
-function red() {
+export function red() {
   return balls[0];
 }
 
-function blue() {
+export function blue() {
   return balls[1];
 }
 
-function yellow() {
+export function yellow() {
   return balls[2];
 }
 
-function green() {
+export function green() {
   return balls[3];
 }
 
-debugger;
+//debugger;
