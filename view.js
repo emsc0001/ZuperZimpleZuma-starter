@@ -1,6 +1,4 @@
-// TODO: Import controller
 import * as controller from "./controller.js";
-import * as animations from "./animations.js";
 export { init, updateDisplay };
 
 // *********************************
