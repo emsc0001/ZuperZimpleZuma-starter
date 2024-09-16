@@ -14,15 +14,15 @@ function dump() {
   let output = "";
   while (node != null) {
     output += '"' + node.data + node.id + '"';
-  while (node != null) {
-    output += '"' + node.data + node.id + '"';
-    output += " -> ";
+    while (node != null) {
+      output += '"' + node.data + node.id + '"';
+      output += " -> ";
 
-
-    node = node.next;
+      node = node.next;
+    }
+    output += "null";
+    console.log(output);
   }
-  output += "null";
-  console.log(output);
 }
 
 // **** WRAPPERS ****
@@ -102,7 +102,6 @@ function removeMatches(matches) {
 // **** BALLS ****
 
 const balls = ["🔴", "🔵", "🟡", "🟢"];
-const balls = ["🔴", "🔵", "🟡", "🟢"];
 
 function randomBall() {
   return balls[Math.floor(Math.random() * balls.length)];
@@ -126,4 +125,3 @@ function green() {
 }
 
 debugger;
-
