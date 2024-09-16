@@ -2,8 +2,6 @@ import * as model from "./model.js";
 import * as view from "./view.js";
 import * as animations from "./animations.js";
 
-// TODO: Export functions used by the view
-
 window.addEventListener("load", init);
 
 function init() {
@@ -44,15 +42,12 @@ export function insertBallAfter(ball) {
 
 // **** ANIMATIONS ****
 
-// TODO: Add controller functions to be called when animations have completed
-
 export function removeMatches(ball) {
   const matches = model.findMatches(ball);
   if (matches.length < 3) return;
   animations.animateRemoveBalls(model, matches);
 }
 
-export function removeBalls(balls, cb) {
+export function removeBalls(balls) {
   model.removeMatches(balls);
-  cb();
 }

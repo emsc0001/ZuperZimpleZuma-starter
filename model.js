@@ -11,15 +11,12 @@ export function dump() {
   let output = "";
   while (node != null) {
     output += '"' + node.data + node.id + '"';
-    while (node != null) {
-      output += '"' + node.data + node.id + '"';
-      output += " -> ";
+    output += " -> ";
 
-      node = node.next;
-    }
-    output += "null";
-    console.log(output);
+    node = node.next;
   }
+  output += "null";
+  console.log(output);
 }
 
 // **** WRAPPERS ****

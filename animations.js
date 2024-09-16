@@ -113,9 +113,8 @@ export function animateRemoveBalls(model, balls) {
 
       function doneImploding() {
         visualBall.removeEventListener("animationend", doneImploding);
-        controller.removeBalls(balls, () => {
-          controller.removeMatches(nextBall);
-        });
+        controller.removeBalls(balls);
+        controller.removeMatches(nextBall);
       }
     }
   }
