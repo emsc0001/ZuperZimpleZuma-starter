@@ -1,7 +1,6 @@
 import SimpleLinkedList from "./simplelinkedlist.js";
 
 export { init };
-export { init };
 
 const list = new SimpleLinkedList();
 
