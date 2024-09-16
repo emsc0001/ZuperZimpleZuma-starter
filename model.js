@@ -34,11 +34,15 @@ function addBall(ball) {
 }
 
 function insertBallAfter(newBall, node) {
-  return list.insertAfter(newBall, node);
+  const insertedNode = list.insertAfter(newBall, node);
+  const matches = findMatches(insertedNode);
+  removeMatches(matches);
 }
 
 function insertBallBefore(newBall, node) {
-  return list.insertBefore(newBall, node);
+  const insertedNode = list.insertBefore(newBall, node);
+  const matches = findMatches(insertedNode);
+  removeMatches(matches);
 }
 
 function numberOfBalls() {
@@ -63,8 +67,7 @@ function getCannonBall() {
 // **** MATCHES ****
 
 function findMatches(node) {
-  let matches = [node, ...findMatchesLeft(node), ...findMatchesRight(node)];
-  removeMatches(matches);
+  return [node, ...findMatchesLeft(node), ...findMatchesRight(node)];
 }
 
 function findMatchesLeft(node) {
@@ -103,7 +106,6 @@ function removeMatches(matches) {
 const balls = ["🔴", "🔵", "🟡", "🟢"];
 
 function randomBall() {
-  return balls[Math.floor(Math.random() * balls.length)];
   return balls[Math.floor(Math.random() * balls.length)];
 }
 
