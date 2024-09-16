@@ -80,33 +80,33 @@ export function getCannonBall() {
 // **** MATCHES ****
 
 export function findMatches(node) {
-  return [node, ...findMatchesRight(node), ...findMatchesLeft(node)];
-}
-
-export function findMatchesRight(node) {
-  if (!node) return [];
-  const matches = [];
-  let nodeR = node.prev;
-  while (!!nodeR) {
-    if (nodeR.data != node.data) {
-      break;
-    }
-    matches.push(nodeR);
-    nodeR = nodeR.prev;
-  }
-  return matches;
+  return [...findMatchesLeft(node), node, ...findMatchesRight(node)];
 }
 
 export function findMatchesLeft(node) {
   if (!node) return [];
   const matches = [];
-  let nodeL = node.next;
+  let nodeL = node.prev;
   while (!!nodeL) {
     if (nodeL.data != node.data) {
       break;
     }
     matches.push(nodeL);
-    nodeL = nodeL.next;
+    nodeL = nodeL.prev;
+  }
+  return matches;
+}
+
+export function findMatchesRight(node) {
+  if (!node) return [];
+  const matches = [];
+  let nodeR = node.next;
+  while (!!nodeR) {
+    if (nodeR.data != node.data) {
+      break;
+    }
+    matches.push(nodeR);
+    nodeR = nodeR.next;
   }
   return matches;
 }

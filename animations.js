@@ -101,6 +101,10 @@ export function animateRemoveBalls(model, balls) {
   let first = true;
   const lastBall = balls[balls.length - 1];
   const nextBall = model.getNextBall(lastBall);
+  model.dump();
+  console.log("nextBall", nextBall);
+  console.log("balls", balls);
+  console.log("lastBall", lastBall);
 
   for (const ball of balls) {
     const visualBall = view.getVisualBall(ball);
